@@ -104,7 +104,7 @@ QueueKafkaApp/
 
    ```bash
    git clone https://github.com/anuragsindhu/testbed.git
-   cd QueueKafkaApp
+   cd testbed
    ```
 
 2. **Build with Maven:**
