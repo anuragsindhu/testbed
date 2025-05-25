@@ -1,7 +1,3 @@
-Below is a sample README that covers an end-to-end overview of the application, explaining its design, implementation, and instructions for usage. You can adjust the details as needed to match your actual project configuration.
-
----
-
 # Queue and Kafka Interface
 
 A web-based application that provides a unified user interface for uploading messages to either a message queue system (using a queue manager and queue) or a Kafka system (using a Kafka cluster and topic). This application demonstrates a modern, responsive interface built with HTML5, CSS3 (using Flexbox), and JavaScript, integrated with a Java Spring Boot back end.
