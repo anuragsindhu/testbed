@@ -113,12 +113,6 @@ QueueKafkaApp/
    mvn clean package
    ```
 
-   or with Gradle:
-
-   ```bash
-   ./gradlew build
-   ```
-
 3. **Run the Application:**
 
    The application is a Spring Boot app. You can run it via Maven:
