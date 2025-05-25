@@ -1,0 +1,299 @@
+/* -------------------------------------------------------------------------- */
+/*                              Reset Default Styles                          */
+/* -------------------------------------------------------------------------- */
+/* This resets browser defaults for margins, paddings, and box-sizing to ensure a
+   consistent starting point across different browsers. */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                      CSS Variables for a Modern Palette                    */
+/* -------------------------------------------------------------------------- */
+/* Variables defined here enable easy theme adjustments. They set colors,
+   border-radius, and other design properties used throughout the stylesheet. */
+:root {
+  --bg-color: #121212;          /* Base background color (dark) */
+  --container-bg: #1e1e1e;       /* Background for container elements */
+  --text-color: #e0e0e0;         /* Off-white text color for legibility */
+  --accent-color: #00e5ff;       /* Vibrant neon blue for accents (e.g. active buttons) */
+  --accent-alt: #1de9b6;         /* Alternate accent (teal) for complementary elements */
+  --btn-bg: var(--accent-color);       /* Button background uses accent color */
+  --btn-hover: #00bcd4;          /* Hover state for buttons */
+  --border-color: #333333;      /* Standard border color for inputs and fieldsets */
+  --border-radius: 8px;         /* Standard rounded corners for elements */
+  --message-error: #e74c3c;      /* Color for error messages */
+  --message-success: #2ecc71;    /* Color for success messages */
+}
+
+/* -------------------------------------------------------------------------- */
+/*                             Body Layout & Styling                          */
+/* -------------------------------------------------------------------------- */
+/* The body is set as a flex container to vertically stack the page sections.
+   A linear gradient provides a modern background, while the text color and font
+   family ensure readability and a clean look. */
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #121212, #0d0d0d);
+  color: var(--text-color);
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                          Main Container Styling                            */
+/* -------------------------------------------------------------------------- */
+/* The container centralizes all page content. It is flexible in width but
+   constrained by a max-width to maintain readability, and uses padding for spacing. */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  background: var(--container-bg);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                              Header Styling                                */
+/* -------------------------------------------------------------------------- */
+/* The header is centered both horizontally and vertically with padding
+   and a bottom margin to separate it from the following content. */
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+header h1 {
+  color: var(--accent-color);
+  font-size: 2.5em;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                           Tab Buttons Styling                              */
+/* -------------------------------------------------------------------------- */
+/* The navigation for the tabs uses Flexbox to center the buttons and add
+   consistent spacing (via gap). The active button uses contrast colors. */
+.tab-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.tab-buttons button {
+  padding: 12px 24px;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 16px;
+  color: var(--text-color);
+  transition: background 0.3s;
+}
+.tab-buttons button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+.tab-buttons button.active {
+  background: var(--accent-color);
+  color: var(--container-bg);
+}
+
+/* -------------------------------------------------------------------------- */
+/*                         Main Content Area Styling                          */
+/* -------------------------------------------------------------------------- */
+/* The <main> area uses flex to center the active tab content horizontally,
+   ensuring the form(s) remains central on the page. */
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                         Tab Content Sections Styling                       */
+/* -------------------------------------------------------------------------- */
+/* Each tab section is hidden by default (display:none) except the active tab.
+   Tabs are designed as flex containers with a max-width for readability,
+   background, padding, rounded borders, and a subtle box-shadow. */
+.tab {
+  display: none;
+  flex-direction: column;
+  width: 100%;
+  max-width: 800px;
+  background: var(--container-bg);
+  padding: 20px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+.tab.active {
+  display: flex;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                           Form Content Styling                             */
+/* -------------------------------------------------------------------------- */
+/* Both .form-content and .upload-form utilize a vertical (column) layout
+   to stack labels, inputs, and other form elements consistently. */
+.form-content,
+.upload-form {
+  display: flex;
+  flex-direction: column;
+}
+label {
+  margin-top: 1em;
+  font-weight: bold;
+}
+/* Styling for input types, dropdowns, and text areas. They use 100% width,
+   internal padding for comfort, consistent margin above, and a dark background
+   with a contrasting text color. */
+select,
+input[type="file"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background: #262626;
+  color: var(--text-color);
+}
+/* Focus state for inputs: removes default outline and changes border color
+   to a contrasting color for better accessibility feedback. */
+select:focus,
+input[type="file"]:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--accent-alt);
+}
+/* Styling for the form-check container to align checkbox and label properly. */
+.form-check {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+}
+.form-check input {
+  margin-right: 8px;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                         Headers Section Styling                            */
+/* -------------------------------------------------------------------------- */
+/* The headers fieldset is visually separated with padding, border, and background.
+   It houses the dynamic header rows which can be added or removed by the user. */
+.headers-fieldset {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background: #2a2a2a;
+}
+/* The legend in the headers fieldset has a little padding and is bold,
+   which highlights its importance. */
+.headers-fieldset legend {
+  padding: 0 5px;
+  font-weight: bold;
+}
+/* The headers container is a flex column to stack header rows one after another. */
+.headers-container {
+  display: flex;
+  flex-direction: column;
+}
+/* Each header row is laid out using flex, with a gap and wrapping if needed. */
+.header-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+/* Styling for header row inputs to fill available space and be consistent with the main inputs. */
+.header-row input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background: #262626;
+  color: var(--text-color);
+}
+/* The remove button for header rows uses the error color to indicate its purpose,
+   has no border, rounded corners, and centers itself along the row. */
+.remove-header-btn {
+  background: var(--message-error);
+  border: none;
+  border-radius: var(--border-radius);
+  color: white;
+  padding: 6px 10px;
+  cursor: pointer;
+  align-self: center;
+}
+/* The add header button is styled with top margin, padding, and uses the alternate accent
+   for its background along with a contrasting text color. */
+.add-header-btn {
+  margin-top: 10px;
+  padding: 8px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: var(--border-radius);
+  background: var(--accent-alt);
+  color: var(--container-bg);
+  cursor: pointer;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                          Submit Button Styling                             */
+/* -------------------------------------------------------------------------- */
+/* The submit button is styled to stand out using the accent color, has generous
+   padding, rounded corners, and transitions smoothly on hover for feedback. */
+.submit-btn {
+  margin-top: 15px;
+  padding: 12px 24px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: var(--border-radius);
+  background: var(--btn-bg);
+  color: var(--container-bg);
+  transition: background 0.3s;
+}
+.submit-btn:hover {
+  background: var(--btn-hover);
+}
+
+/* -------------------------------------------------------------------------- */
+/*                          Message Styling                                   */
+/* -------------------------------------------------------------------------- */
+/* The message container displays inline messages (error or success).
+   It is spaced out from elements above and uses font sizing for clarity. */
+.message {
+  margin-top: 10px;
+  font-size: 14px;
+}
+/* Specific styles for error messages */
+.message.error {
+  color: var(--message-error);
+}
+/* Specific styles for success messages */
+.message.success {
+  color: var(--message-success);
+}
+
+/* -------------------------------------------------------------------------- */
+/*                          Footer Styling                                    */
+/* -------------------------------------------------------------------------- */
+/* The footer is centered and padded, using the alternate accent color for text.
+   Its placement at the bottom provides a final informational area for the app. */
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  padding: 10px;
+  color: var(--accent-alt);
+}

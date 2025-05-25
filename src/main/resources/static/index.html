@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--
+         The viewport meta tag is used for responsive design.
+         It instructs the browser on how to control the page's dimensions and scaling.
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Queue and Kafka Interface</title>
+
+    <!-- External CSS is linked here.
+         This separates presentation (styling) from content and behavior.
+    -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- The main JavaScript file is loaded with defer.
+         The 'defer' attribute ensures that the script runs after the HTML parsing is complete.
+    -->
+    <script defer src="js/main.js"></script>
+</head>
+<body>
+<!-- The container holds the entire application content -->
+<div class="container">
+    <!-- Header section for your application -->
+    <header>
+        <h1>Queue and Kafka Interface</h1>
+    </header>
+
+    <!-- Tab Buttons allow users to switch between the QUEUE and KAFKA interfaces.
+         The "active" class on the QUEUE button indicates it is the default visible tab.
+    -->
+    <nav class="tab-buttons">
+        <button id="btnQueue" class="active">QUEUE</button>
+        <button id="btnKafka">KAFKA</button>
+    </nav>
+
+    <!-- Main content area where the forms will be dynamically injected.
+         There are two sections, one for each tab.
+         Only the active tab (<section>) will be visible at any time.
+    -->
+    <main>
+        <!-- QUEUE tab section; initially set as active -->
+        <section id="tabQueue" class="tab active">
+            <!-- The QUEUE form (for uploading content to a queue) will be injected here via JavaScript -->
+        </section>
+        <!-- KAFKA tab section; initially hidden -->
+        <section id="tabKafka" class="tab">
+            <!-- The KAFKA form (for uploading content related to Kafka) will be injected here via JavaScript -->
+        </section>
+    </main>
+
+    <!-- Footer section showing application information -->
+    <footer>
+        <p>&copy; 2025 My Application</p>
+    </footer>
+</div>
+
+<!--
+    HTML Template for the Upload Form:
+    This template contains the common structure for both tabs (QUEUE and KAFKA).
+    It is hidden from display and will be cloned and customized as needed by the JavaScript.
+-->
+<template id="uploadFormTemplate">
+    <div class="form-content">
+        <!-- Dropdowns for selecting primary and secondary items.
+             For the QUEUE tab, these correspond to "Queue Manager" and "Queue".
+             For the KAFKA tab, they correspond to "Kafka Cluster" and "Topic".
+        -->
+        <label class="primary-label">Primary:</label>
+        <select class="primary-select">
+            <option value="">Select a Primary</option>
+        </select>
+        <label class="secondary-label">Secondary:</label>
+        <select class="secondary-select">
+            <option value="">Select a Secondary</option>
+        </select>
+        <!-- The upload form contains file input, manual content, headers, and submit button -->
+        <form class="upload-form">
+            <!-- File input allows the user to select a file for upload -->
+            <label>Upload File:</label>
+            <input type="file" class="file-input"
+                   accept=".txt,.json,.xml,text/plain,application/json,application/xml">
+            <!-- Textarea allows the user to paste content manually -->
+            <label>Or Paste Content:</label>
+            <textarea class="content-input" rows="5"></textarea>
+            <!-- Checkbox to let the user choose between Windows and Unix newline formats -->
+            <div class="form-check">
+                <input type="checkbox" class="newline-check">
+                <label>Use Windows New Line Format</label>
+            </div>
+            <!-- Fieldset for optional message headers.
+                 Users can add one or more header key-value pairs using the "Add Header" button.
+            -->
+            <fieldset class="headers-fieldset">
+                <legend>Message Headers (Optional)</legend>
+                <div class="headers-container"></div>
+                <button type="button" class="add-header-btn">Add Header</button>
+            </fieldset>
+            <!-- Submit button for the form -->
+            <button type="submit" class="submit-btn">Upload</button>
+            <!-- Message container for displaying inline error/success messages -->
+            <div class="message"></div>
+        </form>
+    </div>
+</template>
+</body>
+</html>
