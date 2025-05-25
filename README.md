@@ -103,7 +103,7 @@ QueueKafkaApp/
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yourusername/QueueKafkaApp.git
+   git clone https://github.com/anuragsindhu/testbed.git
    cd QueueKafkaApp
    ```
 
@@ -130,7 +130,7 @@ QueueKafkaApp/
    Alternatively, run the packaged jar:
 
    ```bash
-   java -jar target/QueueKafkaApp-0.0.1-SNAPSHOT.jar
+   java -jar target/testbed-0.0.1-SNAPSHOT.jar
    ```
 
 4. **Open the Application in a Browser:**
