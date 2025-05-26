@@ -7,6 +7,7 @@ A web-based application that provides a unified user interface for uploading mes
 ## Table of Contents
 
 - [Features](#features)
+- [Architecture](#architecture)
 - [Technologies Used](#technologies-used)
 - [Application Structure](#application-structure)
 - [Installation and Setup](#installation-and-setup)
@@ -40,6 +41,79 @@ A web-based application that provides a unified user interface for uploading mes
   The REST API endpoints (e.g., `/api/qms`, `/api/{queueManager}/queues`, `/api/kcs`, `/api/{kafkaCluster}/topics` and `/api/upload`) provide the data for the dropdowns and process the upload submission.
 
 ---
+
+## Architecture
+
+### User Interface
+
+```
+     +------------------------------------------------+
+     |                     User                       |
+     |  (Interacts with UI: clicks, inputs, etc.)     |
+     +-------------------------+----------------------+
+                               |
+                               v
+     +------------------------------------------------+
+     |                    View                        |
+     | (Renders UI, clones form template, implements   |
+     |  event delegation for dynamic elements, and    |
+     |  updates the DOM with ARIA/accessibility props)|
+     +-------------------------+----------------------+
+                               |
+                               v
+     +------------------------------------------------+
+     |                 Controller                     |<---+
+     | (Handles user events, validates input, wires   |    |
+     |  View events to Model actions, manages state,   |    |  Pub/Sub (Event Bus)
+     |  and emits global events to any subscribers)    |    |
+     +-------------------------+----------------------+    |
+                               |                           |
+                               v                           |
+     +------------------------------------------------+    |
+     |                   Model                        |    |
+     | (Manages data and API calls; delegates HTTP     |    |
+     | requests to the APIService module)              |    |
+     +-------------------------+----------------------+    |
+                               |                           |
+                               v                           |
+     +------------------------------------------------+    |
+     |                APIService                      |    |
+     | (Encapsulates fetch(), implements error retry,   |    |
+     |  and centralizes HTTP logic for all API calls)   |    |
+     +------------------------------------------------+    |
+                                                           |
+                                                           +<-- Global listeners on the Event Bus
+
+```
+
+Notice how:
+
+• The **User** interacts with the **View** (which renders the UI from templates and uses event delegation).  
+• The **Controller** listens to events coming from the View (including via the Event Bus) and coordinates the workflow.  
+• The **Controller** calls the **Model** (the data layer), which in turn uses the **APIService** to perform HTTP requests (with error retries and standardized logic).  
+• The **Event Bus** is used by the Controller to publish cross-cutting events (like form submission successes or failures) that any part of the app can subscribe to.
+
+### Flow Summary
+
+1. **User Interaction:**
+    - The user clicks or inputs data via the View (UI elements).
+
+2. **View Layer:**
+    - The View captures these events (like tab clicks, form submission, header row addition/removal) and updates the DOM accordingly.
+    - It uses template literals and event delegation to handle dynamic elements.
+
+3. **Controller Coordination:**
+    - The Controller picks up these events, performs validation, and directs the Model to fetch data or submit form data.
+    - It also manages application state (e.g., which tab is active) and updates the URL hash for routing.
+    - The Controller emits global events using the Event Bus so other parts of the application (or external logging/analytics modules) can subscribe.
+
+4. **Model & API Calls:**
+    - The Model receives request commands from the Controller and makes API calls using the centrally managed APIService.
+    - The APIService sends HTTP requests (using fetch), handles errors with retries, and returns the results back up to the Model.
+
+5. **Event Bus:**
+    - The Event Bus decouples parts of the system; the Controller emits events such as “formSubmitted” and “formSubmissionFailed” after processing.
+    - Any component listening on the Event Bus can react accordingly.
 
 ## Technologies Used
 
@@ -75,7 +149,12 @@ QueueKafkaApp/
 │   │           ├── css/
 │   │           │   └── style.css       # Styles referencing Flexbox
 │   │           └── js/
-│   │               └── main.js         # All client-side logic (form wiring, API calls)
+│   │               └── main.js        // Application bootstrapper
+│   │               └── apiService.js  // Centralized HTTP requests with error handling
+│   │               └── eventBus.js    // Global pub/sub system
+│   │               └── model.js       // Data layer; uses apiService for API calls
+│   │               └── view.js        // UI rendering, templating, and event delegation
+│   │               └── controller.js  // Orchestrates interactions; handles routing and state
 │   └── test/
 │       └── java/
 │           └── com/example/demo/
