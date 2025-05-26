@@ -14,7 +14,6 @@ A web-based application that provides a unified user interface for uploading mes
 - [API Endpoints](#api-endpoints)
 - [Testing](#testing)
 - [Development Notes](#development-notes)
-- [License](#license)
 
 ---
 
